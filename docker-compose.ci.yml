@@ -1,0 +1,6 @@
+version: '3.7'
+services:
+  test:
+    image: USE_DEV_IMAGE
+    init: true
+    command: yarn test

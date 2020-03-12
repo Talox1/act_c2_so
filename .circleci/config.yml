@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: 'circleci/buildpack-deps:stretch'
+    environment:
+      - IMAGE_NAME: DOCKER_IMAGE
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Set Up Docker Commands
+          command: |
+            if [[ $CIRCLE_SHELL_ENV == *"localbuild"* ]]; then
+                echo "export docker='sudo docker'" >> $BASH_ENV
+                echo "export compose='sudo docker-compose'" >> $BASH_ENV
+            else
+                echo "export compose='docker-compose'" >> $BASH_ENV
+                echo "export docker='docker'" >> $BASH_ENV
+            fi
+      # Complete the job
+      - run:
+          name: 'List Images'
+          command: $docker image ls | grep $IMAGE_NAME

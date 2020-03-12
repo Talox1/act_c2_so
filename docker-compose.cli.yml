@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  yarn:
+    image: USE_DEV_IMAGE
+    init: true
+    entrypoint: yarn
+    volumes:
+      - .:USE_DEV_IMAGE_DIRECTORY
+      - yarn_cache:USE_DEV_IMAGE_DIRECTORY/node_modules
+
+volumes:
+  yarn_cache:
